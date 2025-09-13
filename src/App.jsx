@@ -8,13 +8,23 @@ import Emergency from './Components/Emergency'
 import Footer from './Components/Footer'
 import Login from './Routes/login'
 import Dashboard from './Routes/dashboard'
+import SigninPage from './Routes/Signin'
+import One from './Routes/one'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 
 function App() {
   const router = createBrowserRouter([
     {
       path: "/",
+      element: <One/>
+    },
+    {
+      path: "/login",
       element: <Login/>
+    },
+    {
+      path: "/signin",
+      element: <SigninPage/>
     },
     {
       path: "/home",

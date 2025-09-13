@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
-export default function LoginPage() {
+export default function SigninPage() {
     const [role, setRole] = useState("school");
     const [formData, setFormData] = useState({});
     const [submitted, setSubmitted] = useState(false);
@@ -31,8 +31,11 @@ export default function LoginPage() {
                 }
             } else if (role === "student") {
                 if (
-                    
+                    formData.schoolName &&
                     formData.studentName &&
+                    formData.class &&
+                    formData.section &&
+                    formData.rollNumber &&
                     formData.password
                 ) {
                     localStorage.setItem("studentLogin", JSON.stringify(formData));
@@ -119,9 +122,41 @@ export default function LoginPage() {
                             <>
                                 <input
                                     type="text"
+                                    name="schoolName"
+                                    placeholder="School Name"
+                                    value={formData.schoolName || ""}
+                                    onChange={handleChange}
+                                    className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
+                                />
+                                <input
+                                    type="text"
                                     name="studentName"
                                     placeholder="Student Name"
                                     value={formData.studentName || ""}
+                                    onChange={handleChange}
+                                    className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
+                                />
+                                <input
+                                    type="text"
+                                    name="class"
+                                    placeholder="Class"
+                                    value={formData.class || ""}
+                                    onChange={handleChange}
+                                    className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
+                                />
+                                <input
+                                    type="text"
+                                    name="section"
+                                    placeholder="Section"
+                                    value={formData.section || ""}
+                                    onChange={handleChange}
+                                    className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
+                                />
+                                <input
+                                    type="text"
+                                    name="rollNumber"
+                                    placeholder="Roll Number"
+                                    value={formData.rollNumber || ""}
                                     onChange={handleChange}
                                     className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
                                 />
@@ -148,7 +183,7 @@ export default function LoginPage() {
                             type="submit"
                             className="w-full bg-black text-white py-2 rounded-lg hover:bg-gray-800 transition"
                         >
-                            {role === "school" ? "Log in" : "Log in"}
+                            {role === "school" ? "Sign in" : "Sign in"}
                         </button></Link>
                     </form>
                 </div>
