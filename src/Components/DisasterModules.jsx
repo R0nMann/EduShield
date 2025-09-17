@@ -51,7 +51,7 @@ export default function DisasterModules() {
       action1: "Start Learning",
       action2: "Take Quiz",
       action1href: "",
-      action2href: ""
+      action2href: "https://docs.google.com/forms/d/e/1FAIpQLSdIZzlUueLVB836uuUNt1arNH2jGJkazMRUcOq6qQuXIPQ2cg/viewform?usp=header"
     },
     {
       id: 3,
@@ -93,7 +93,7 @@ export default function DisasterModules() {
       action1: "Start Learning",
       action2: "Take Quiz",
       action1href: "",
-      action2href: ""
+      action2href: "https://docs.google.com/forms/d/e/1FAIpQLSdcuHvV7uLujxpOV-U3f0cADOpIHXlmCPDIHouGX-HaoTbdxw/viewform?usp=dialog"
     },
     {
       id: 6,
@@ -107,7 +107,7 @@ export default function DisasterModules() {
       action1: "Start Learning",
       action2: "Take Quiz",
       action1href: "",
-      action2href: ""
+      action2href: "https://docs.google.com/forms/d/e/1FAIpQLSf-dHC4cu3isqqOxBOkcD9RBJbwPmTjjkrWovADy6xhQewjhw/viewform?usp=dialog"
     },
     // ✅ you can keep adding more here safely
   ];
