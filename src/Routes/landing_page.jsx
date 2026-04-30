@@ -1,6 +1,6 @@
 import { Shield } from "lucide-react";
 import { Link } from "react-router-dom";
-export default function One() {
+export default function Landing_Page() {
   return (
     <div className="min-h-screen bg-gray-100">
       {/* Header */}
