@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { ArrowLeftToLine,School2 } from "lucide-react";
 import { apiCall, API_ENDPOINTS } from "../config/api";
 
 export default function LoginPage() {
@@ -70,16 +71,19 @@ export default function LoginPage() {
             <div className="w-4/7 flex items-center justify-center">
                 <div className="w-full max-w-md p-8">
                     {/* Logo + Title */}
-                    <div className="flex justify-center gap-2 mb-3">
-                        <img className='w-10 pointer-events-none' src="logo.png" alt="" />
-                        <h1 className="text-3xl font-bold text-center mb-2">EduShield</h1>
+                    <div className="flex flex-col items-center gap-2 mb-3">
+                        <img className=' size-20 pointer-events-none' src="logo.png" alt="" />
+                        <div className="flex flex-row items-center gap-5">
+                                        <School2 />
+                                        <h1 className="text-2xl sm:text-3xl font-bold mb-2">School Log In</h1>
+                                        </div>
                     </div>
                     <p className="text-sm text-gray-500 text-center mb-6">
                         Learn, prepare, and stay safe — turning disaster readiness into a smart, engaging journey
                     </p>
 
                     {/* Role Selection */}
-                    <div className="flex justify-center space-x-6 mb-6">
+                    {/* <div className="flex justify-center space-x-6 mb-6">
                         <label className="flex items-center space-x-2">
                             <input
                                 type="radio"
@@ -104,7 +108,7 @@ export default function LoginPage() {
                             />
                             <span>School</span>
                         </label>
-                    </div>
+                    </div> */}
 
                     {/* Error Message */}
                     {error && (
@@ -149,12 +153,19 @@ export default function LoginPage() {
                         >
                             {loading ? "Logging in..." : "Log in"}
                         </button>
+                        <Link to="/"><div>
+                            <button className="w-full flex justify-center gap-4 bg-white text-black py-2 rounded-lg hover:bg-gray-400/20 border-2 border-black-100 transition disabled:bg-gray-400">
+                                <ArrowLeftToLine />
+                                Go Back
+                            </button>
+                        </div>
+                        </Link>
                     </form>
 
                     <div className="mt-4 text-center">
                         <p className="text-sm text-gray-600">
                             Don't have an account?{" "}
-                            <Link to="/signin" className="text-black font-semibold hover:underline">
+                            <Link to="/schoolsignin" className="text-black font-semibold hover:underline">
                                 Sign up
                             </Link>
                         </p>
