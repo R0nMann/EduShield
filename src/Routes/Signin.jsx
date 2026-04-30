@@ -1,10 +1,13 @@
-import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { apiCall, API_ENDPOINTS } from "../config/api";
 
 export default function SigninPage() {
     const [role, setRole] = useState("school");
     const [formData, setFormData] = useState({});
-    const [submitted, setSubmitted] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState("");
+    const navigate = useNavigate();
 
     // Handle input change
     const handleChange = (e) => {
@@ -12,40 +15,70 @@ export default function SigninPage() {
             ...formData,
             [e.target.name]: e.target.value,
         });
+        setError("");
     };
 
-    // Handle submit
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        setSubmitted(true);
-    };
+// Handle submit
+const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setError("");
 
-    // Effect: save to localStorage if all fields are filled
-    useEffect(() => {
-        if (submitted) {
-            if (role === "school") {
-                if (formData.schoolName && formData.password) {
-                    localStorage.setItem("schoolLogin", JSON.stringify(formData));
-                } else {
-                    alert("Please fill all fields before submitting ❌");
-                }
-            } else if (role === "student") {
-                if (
-                    formData.schoolName &&
-                    formData.studentName &&
-                    formData.class &&
-                    formData.section &&
-                    formData.rollNumber &&
-                    formData.password
-                ) {
-                    localStorage.setItem("studentLogin", JSON.stringify(formData));
-                } else {
-                    alert("Please fill all fields before submitting ❌");
-                }
-            }
-            setSubmitted(false); // reset flag
+    try {
+        let response;
+
+        if (role === "school") {
+            // Register School
+            const schoolData = {
+                schoolId: `SCH${Date.now()}`,
+                schoolName: formData.schoolName,
+                email: formData.email,
+                password: formData.password,
+                address: formData.address || "",
+                contactNumber: formData.contactNumber || ""
+            };
+
+            response = await apiCall(API_ENDPOINTS.REGISTER_SCHOOL, 'POST', schoolData);
+        } else {
+            // Register Student
+            const studentData = {
+                studentId: formData.rollNumber || `STU${Date.now()}`,
+                name: formData.studentName,
+                email: formData.email,
+                password: formData.password,
+                schoolId: formData.schoolName,
+                grade: formData.class || "",
+                section: formData.section || ""
+            };
+
+            response = await apiCall(API_ENDPOINTS.REGISTER_STUDENT, 'POST', studentData);
         }
-    }, [submitted, role, formData]);
+
+        // Registration successful - now auto-login
+        alert("Registration successful! Logging you in...");
+
+        const loginData = {
+            email: formData.email,
+            password: formData.password,
+            userType: role.toUpperCase()
+        };
+
+        const loginResponse = await apiCall(API_ENDPOINTS.LOGIN, 'POST', loginData);
+
+        // Save token and user data
+        localStorage.setItem('token', loginResponse.token);
+        localStorage.setItem('userType', loginResponse.userType);
+        localStorage.setItem('userData', JSON.stringify(loginResponse.userData));
+
+        // Navigate to home
+        navigate('/home');
+
+    } catch (err) {
+        setError(err.message || "Registration failed. Please try again.");
+    } finally {
+        setLoading(false);
+    }
+};
 
     return (
         <div className="flex h-screen">
@@ -53,7 +86,7 @@ export default function SigninPage() {
             <div className="w-3/7 bg-gray-200 flex flex-col gap-6 items-center justify-center">
                 <img className="w-80 pointer-events-none" src="log_l_pic.jpg" alt="" />
                 <p className="text-2xl font-semibold text-black">
-                    “Safety is not expensive, it’s priceless”
+                    "Safety is not expensive, it's priceless"
                 </p>
             </div>
 
@@ -97,7 +130,14 @@ export default function SigninPage() {
                         </label>
                     </div>
 
-                    {/* Login Form */}
+                    {/* Error Message */}
+                    {error && (
+                        <div className="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded">
+                            {error}
+                        </div>
+                    )}
+
+                    {/* Registration Form */}
                     <form className="space-y-4" onSubmit={handleSubmit}>
                         {role === "school" ? (
                             <>
@@ -107,14 +147,42 @@ export default function SigninPage() {
                                     placeholder="School Name"
                                     value={formData.schoolName || ""}
                                     onChange={handleChange}
+                                    required
+                                    className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
+                                />
+                                <input
+                                    type="email"
+                                    name="email"
+                                    placeholder="Email"
+                                    value={formData.email || ""}
+                                    onChange={handleChange}
+                                    required
+                                    className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
+                                />
+                                <input
+                                    type="text"
+                                    name="address"
+                                    placeholder="Address (Optional)"
+                                    value={formData.address || ""}
+                                    onChange={handleChange}
+                                    className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
+                                />
+                                <input
+                                    type="tel"
+                                    name="contactNumber"
+                                    placeholder="Contact Number (Optional)"
+                                    value={formData.contactNumber || ""}
+                                    onChange={handleChange}
                                     className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
                                 />
                                 <input
                                     type="password"
                                     name="password"
-                                    placeholder="Password"
+                                    placeholder="Password (min 6 characters)"
                                     value={formData.password || ""}
                                     onChange={handleChange}
+                                    required
+                                    minLength="6"
                                     className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
                                 />
                             </>
@@ -123,9 +191,10 @@ export default function SigninPage() {
                                 <input
                                     type="text"
                                     name="schoolName"
-                                    placeholder="School Name"
+                                    placeholder="School ID/Name"
                                     value={formData.schoolName || ""}
                                     onChange={handleChange}
+                                    required
                                     className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
                                 />
                                 <input
@@ -134,12 +203,22 @@ export default function SigninPage() {
                                     placeholder="Student Name"
                                     value={formData.studentName || ""}
                                     onChange={handleChange}
+                                    required
+                                    className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
+                                />
+                                <input
+                                    type="email"
+                                    name="email"
+                                    placeholder="Email"
+                                    value={formData.email || ""}
+                                    onChange={handleChange}
+                                    required
                                     className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
                                 />
                                 <input
                                     type="text"
                                     name="class"
-                                    placeholder="Class"
+                                    placeholder="Class/Grade"
                                     value={formData.class || ""}
                                     onChange={handleChange}
                                     className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
@@ -155,7 +234,7 @@ export default function SigninPage() {
                                 <input
                                     type="text"
                                     name="rollNumber"
-                                    placeholder="Roll Number"
+                                    placeholder="Roll Number (Optional)"
                                     value={formData.rollNumber || ""}
                                     onChange={handleChange}
                                     className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
@@ -163,29 +242,34 @@ export default function SigninPage() {
                                 <input
                                     type="password"
                                     name="password"
-                                    placeholder="Password"
+                                    placeholder="Password (min 6 characters)"
                                     value={formData.password || ""}
                                     onChange={handleChange}
+                                    required
+                                    minLength="6"
                                     className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
                                 />
                             </>
                         )}
 
-                        {/* Forgot Password */}
-                        <div className="flex justify-end text-sm">
-                            <a href="#" className="text-blue-500 hover:underline">
-                                Forgot password?
-                            </a>
-                        </div>
-
                         {/* Submit Button */}
-                        <Link to="/home"><button
+                        <button
                             type="submit"
-                            className="w-full bg-black text-white py-2 rounded-lg hover:bg-gray-800 transition"
+                            disabled={loading}
+                            className="w-full bg-black text-white py-2 rounded-lg hover:bg-gray-800 transition disabled:bg-gray-400"
                         >
-                            {role === "school" ? "Sign in" : "Sign in"}
-                        </button></Link>
+                            {loading ? "Registering..." : "Sign up"}
+                        </button>
                     </form>
+
+                    <div className="mt-4 text-center">
+                        <p className="text-sm text-gray-600">
+                            Already have an account?{" "}
+                            <Link to="/login" className="text-black font-semibold hover:underline">
+                                Log in
+                            </Link>
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
