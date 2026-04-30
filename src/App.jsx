@@ -6,25 +6,35 @@ import DisasterModules from './Components/DisasterModules'
 import Drills from './Components/Drills'
 import Emergency from './Components/Emergency'
 import Footer from './Components/Footer'
-import Login from './Routes/login'
+import SchoolLogin from './Routes/school_login'
+import StudentLogin from './Routes/student_login'
 import Dashboard from './Routes/dashboard'
-import SigninPage from './Routes/Signin'
-import One from './Routes/one'
+import StudentSignInPage from './Routes/student_signin'
+import SchoolSignInPage from './Routes/school_signin'
+import Landing_Page from './Routes/landing_page'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 
 function App() {
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <One/>
+      element: <Landing_Page/>
     },
     {
-      path: "/login",
-      element: <Login/>
+      path: "/schoollogin",
+      element: <SchoolLogin/>
     },
     {
-      path: "/signin",
-      element: <SigninPage/>
+      path: "/studentlogin",
+      element: <StudentLogin/>
+    },
+    {
+      path: "/studentsignin",
+      element: <StudentSignInPage/>
+    },
+    {
+      path: "/schoolsignin",
+      element: <SchoolSignInPage/>
     },
     {
       path: "/home",

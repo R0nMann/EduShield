@@ -27,7 +27,6 @@ const handleSubmit = async (e) => {
     try {
         let response;
 
-        if (role === "school") {
             // Register School
             const schoolData = {
                 schoolId: `SCH${Date.now()}`,
@@ -39,21 +38,7 @@ const handleSubmit = async (e) => {
             };
 
             response = await apiCall(API_ENDPOINTS.REGISTER_SCHOOL, 'POST', schoolData);
-        } else {
-            // Register Student
-            const studentData = {
-                studentId: formData.rollNumber || `STU${Date.now()}`,
-                name: formData.studentName,
-                email: formData.email,
-                password: formData.password,
-                schoolId: formData.schoolName,
-                grade: formData.class || "",
-                section: formData.section || ""
-            };
-
-            response = await apiCall(API_ENDPOINTS.REGISTER_STUDENT, 'POST', studentData);
-        }
-
+        
         // Registration successful - now auto-login
         alert("Registration successful! Logging you in...");
 
