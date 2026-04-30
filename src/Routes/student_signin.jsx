@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { ArrowLeftToLine } from "lucide-react";
 import { apiCall, API_ENDPOINTS } from "../config/api";
 
 export default function SigninPage() {
@@ -245,7 +246,15 @@ const handleSubmit = async (e) => {
                             className="w-full bg-black text-white py-2 rounded-lg hover:bg-gray-800 transition disabled:bg-gray-400"
                         >
                             {loading ? "Registering..." : "Sign up"}
+                            
                         </button>
+                        <Link to="/"><div>
+                                                    <button className="w-full flex justify-center gap-4 bg-white text-black py-2 rounded-lg hover:bg-gray-400/20 border-2 border-black-100 transition disabled:bg-gray-400">
+                                                        <ArrowLeftToLine />
+                                                        Go Back
+                                                    </button>
+                                                </div>
+                                                </Link>
                     </form>
 
                     <div className="mt-4 text-center">
