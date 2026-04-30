@@ -251,7 +251,7 @@ const handleSubmit = async (e) => {
                     <div className="mt-4 text-center">
                         <p className="text-sm text-gray-600">
                             Already have an account?{" "}
-                            <Link to="/login" className="text-black font-semibold hover:underline">
+                            <Link to="/studentlogin" className="text-black font-semibold hover:underline">
                                 Log in
                             </Link>
                         </p>
