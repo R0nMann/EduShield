@@ -112,9 +112,9 @@ const Navbar = () => {
             </a>
             <div className="pt-4 pb-3 border-t border-gray-200">
               <div className="flex flex-col space-y-2 px-3">
-                <button className="text-gray-600 hover:text-gray-900 text-left px-3 py-2 text-base font-medium">
-                  Login
-                </button>
+                <Link to="/"><button className="text-gray-600 hover:text-gray-900 text-left px-3 py-2 text-base font-medium">
+                  Log Out
+                </button></Link>
                 <button className="bg-black text-white px-4 py-2 rounded-md text-base font-medium hover:bg-gray-800 transition-colors duration-200">
                   Get Started
                 </button>
