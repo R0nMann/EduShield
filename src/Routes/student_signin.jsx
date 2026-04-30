@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { apiCall, API_ENDPOINTS } from "../config/api";
 
 export default function SigninPage() {
-    const [role, setRole] = useState("school");
+    const [role, setRole] = useState("student");
     const [formData, setFormData] = useState({});
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
@@ -27,19 +27,6 @@ const handleSubmit = async (e) => {
     try {
         let response;
 
-        if (role === "school") {
-            // Register School
-            const schoolData = {
-                schoolId: `SCH${Date.now()}`,
-                schoolName: formData.schoolName,
-                email: formData.email,
-                password: formData.password,
-                address: formData.address || "",
-                contactNumber: formData.contactNumber || ""
-            };
-
-            response = await apiCall(API_ENDPOINTS.REGISTER_SCHOOL, 'POST', schoolData);
-        } else {
             // Register Student
             const studentData = {
                 studentId: formData.rollNumber || `STU${Date.now()}`,
@@ -52,7 +39,6 @@ const handleSubmit = async (e) => {
             };
 
             response = await apiCall(API_ENDPOINTS.REGISTER_STUDENT, 'POST', studentData);
-        }
 
         // Registration successful - now auto-login
         alert("Registration successful! Logging you in...");
@@ -72,7 +58,7 @@ const handleSubmit = async (e) => {
 
         // Navigate to home
         navigate('/home');
-
+    
     } catch (err) {
         setError(err.message || "Registration failed. Please try again.");
     } finally {
