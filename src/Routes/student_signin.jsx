@@ -204,7 +204,7 @@ const handleSubmit = async (e) => {
                                 <input
                                     type="text"
                                     name="class"
-                                    placeholder="Class/Grade"
+                                    placeholder="Class/Grade — e.g., 9"
                                     value={formData.class || ""}
                                     onChange={handleChange}
                                     className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
@@ -220,7 +220,7 @@ const handleSubmit = async (e) => {
                                 <input
                                     type="text"
                                     name="rollNumber"
-                                    placeholder="Roll Number (Optional)"
+                                    placeholder="Roll Number (Optional) — e.g., STUD001"
                                     value={formData.rollNumber || ""}
                                     onChange={handleChange}
                                     className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
