@@ -50,7 +50,7 @@ export default function DisasterModules() {
       duration: "35 mins", 
       action1: "Start Learning",
       action2: "Take Quiz",
-      action1href: "",
+      action1href: "https://www.youtube.com/watch?v=tItKhAebpuI",
       action2href: "https://docs.google.com/forms/d/e/1FAIpQLSdIZzlUueLVB836uuUNt1arNH2jGJkazMRUcOq6qQuXIPQ2cg/viewform?usp=header"
     },
     {
@@ -64,7 +64,7 @@ export default function DisasterModules() {
       duration: "40 mins",
       action1: "Start Learning",
       action2: "Take Quiz",
-      action1href: "",
+      action1href: "https://www.youtube.com/watch?v=Xgc90CoJbDI",
       action2href: ""
     },
     {
@@ -78,7 +78,7 @@ export default function DisasterModules() {
       duration: "45 mins",
       action1: "Start Learning",
       action2: "Take Quiz",
-      action1href: "",
+      action1href: "https://www.youtube.com/watch?v=5OKFljZ2GQE",
       action2href: ""
     },
     {
@@ -92,7 +92,7 @@ export default function DisasterModules() {
       duration: "35 mins",
       action1: "Start Learning",
       action2: "Take Quiz",
-      action1href: "",
+      action1href: "https://www.youtube.com/watch?v=7w5f81L9llA",
       action2href: "https://docs.google.com/forms/d/e/1FAIpQLSdcuHvV7uLujxpOV-U3f0cADOpIHXlmCPDIHouGX-HaoTbdxw/viewform?usp=dialog"
     },
     {
@@ -106,10 +106,9 @@ export default function DisasterModules() {
       duration: "40 mins",
       action1: "Start Learning",
       action2: "Take Quiz",
-      action1href: "",
+      action1href: "https://www.youtube.com/watch?v=EHqXMxY4_Nk",
       action2href: "https://docs.google.com/forms/d/e/1FAIpQLSf-dHC4cu3isqqOxBOkcD9RBJbwPmTjjkrWovADy6xhQewjhw/viewform?usp=dialog"
     },
-    // ✅ you can keep adding more here safely
   ];
 
   return (
